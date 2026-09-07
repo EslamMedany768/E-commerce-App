@@ -25,6 +25,7 @@ class LoginViewModel extends Cubit<LoginStates> {
         passwordController.text,
       );
       either.fold(
+        
         (failure) => emit(LoginErrorState(error: failure.errorName)),
         (response) => emit(LoginSuccessState(loginResponseEntity: response)),
       );

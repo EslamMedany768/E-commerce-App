@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/domain/entities/AddProductResponseEntity.dart';
+import 'package:e_commerce_app/domain/entities/GetWishListProduct.dart';
 import 'package:e_commerce_app/domain/entities/ProductResponseEntity.dart';
 
 class ProductTabStates {}
@@ -32,3 +33,27 @@ class AddToCartErrorStates extends ProductTabStates {
 
   AddToCartErrorStates({required this.errorName});
 }
+
+class AddToWishlistSuccessState extends ProductTabStates {}
+
+class AddToWishlistErrorState extends ProductTabStates {
+  String errorName;
+
+  AddToWishlistErrorState({required this.errorName});
+}
+
+class GetWishlistItemsSuccessState extends ProductTabStates {
+  GetWishListProductsEntity response;
+
+  GetWishlistItemsSuccessState({required this.response});
+}
+
+class GetWishlistItemsErrorState extends ProductTabStates {
+  String errorName;
+
+  GetWishlistItemsErrorState({required this.errorName});
+}
+class GetWishlistItemsLoadingState extends ProductTabStates {
+
+}
+

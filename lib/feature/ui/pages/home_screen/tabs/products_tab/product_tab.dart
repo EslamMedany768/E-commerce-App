@@ -22,16 +22,21 @@ class ProductTab extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: BlocListener<ProductTabViewModel,ProductTabStates>(
+        child: BlocListener<ProductTabViewModel, ProductTabStates>(
           listener: (context, state) {
             if (state is AddToCartSuccessStates) {
               print("succ");
               FlutterToast.showToast(
-                text: "numOfCartItems : ${state.productResponse.numOfCartItems}",
+                text:
+                    "numOfCartItems : ${state.productResponse.numOfCartItems}",
               );
             } else if (state is AddToCartErrorStates) {
               print("error");
               FlutterToast.showToast(text: state.errorName);
+            } else if (state is AddToWishlistSuccessState) {
+              return FlutterToast.showToast(text: "Added Successfully");
+            } else {
+              return FlutterToast.showToast(text: "Failed");
             }
           },
           child: BlocBuilder<ProductTabViewModel, ProductTabStates>(

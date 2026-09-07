@@ -9,9 +9,11 @@ import 'package:e_commerce_app/domain/entities/LoginResponseEntity.dart';
 import 'package:e_commerce_app/domain/entities/RegisterResponseEntity.dart';
 import 'package:e_commerce_app/domain/repository/data_sources/remote_data_source/auth_remote_data_source.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+
   ApiManager apiManager;
 
   AuthRemoteDataSourceImpl({required this.apiManager});
@@ -49,6 +51,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Either<Failures, LoginResponseEntity>> login(String email, String password) async {
     var connectivityResult = await Connectivity().checkConnectivity();
+
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
       try {

@@ -49,14 +49,20 @@ class ProductTabItem extends StatelessWidget {
               Positioned(
                 right: 6,
                 top: 6,
-                child: CircleAvatar(
-                  backgroundColor: AppColor.white,
-                  foregroundColor: AppColor.primary,
-                  radius: 14,
-                  child: ImageIcon(
-                    AssetImage("assets/images/fav_icon_selected.png"),
+                child:  InkWell(
+                    onTap: () {
+                      viewModel.addToWishlist(product.id!);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: AppColor.white,
+                      foregroundColor: AppColor.primary,
+                      radius: 14,
+                      child: ImageIcon(
+                        AssetImage("assets/images/fav_icon_selected.png"),
+                      ),
+                    ),
                   ),
-                ),
+
               ),
             ],
           ),

@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/domain/use_cases/add_to_cart.dart';
+import 'package:e_commerce_app/domain/use_cases/add_to_wishlist.dart';
 import 'package:e_commerce_app/domain/use_cases/get_all_products.dart';
+import 'package:e_commerce_app/domain/use_cases/get_wishlist_items_use_case.dart';
 import 'package:e_commerce_app/feature/ui/pages/home_screen/tabs/products_tab/cubit/product_tab_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -9,10 +11,15 @@ import 'package:injectable/injectable.dart';
 class ProductTabViewModel extends Cubit<ProductTabStates> {
   GetAllProductsUseCase getAllProductsUseCase;
   AddToCartUseCase addToCartUseCase;
-  int numOfItemsInCart=0;
+  AddToWishlistUseCase addToWishlistUseCase;
+  GetWishlistItemsUseCase getWishlistItemsUseCase;
+  int numOfItemsInCart = 0;
+
   ProductTabViewModel({
+    required this.addToWishlistUseCase,
     required this.getAllProductsUseCase,
     required this.addToCartUseCase,
+    required this.getWishlistItemsUseCase,
   }) : super(ProductTabInitialStates());
 
   /// hold data & handle logic
@@ -30,7 +37,6 @@ class ProductTabViewModel extends Cubit<ProductTabStates> {
   }
 
   addToCart(String productId) async {
-
     var either = await addToCartUseCase.invoke(productId);
     either.fold(
       (error) {
@@ -38,9 +44,34 @@ class ProductTabViewModel extends Cubit<ProductTabStates> {
         return emit(AddToCartErrorStates(errorName: error.errorName));
       },
       (response) {
-        numOfItemsInCart=response.numOfCartItems!.toInt();
+        numOfItemsInCart = response.numOfCartItems!.toInt();
         print("num of items in cart : $numOfItemsInCart");
         return emit(AddToCartSuccessStates(productResponse: response));
+      },
+    );
+  }
+
+  getWishListItems() async {
+    emit(GetWishlistItemsLoadingState());
+    var either = await getWishlistItemsUseCase.invoke();
+    either.fold(
+      (l) {
+        emit(GetWishlistItemsErrorState(errorName: l.errorName));
+      },
+      (response) {
+        emit(GetWishlistItemsSuccessState(response: response));
+      },
+    );
+  }
+
+  addToWishlist(String productId) async {
+    var either = await addToWishlistUseCase.invoke(productId);
+    either.fold(
+      (error) {
+        return emit(AddToWishlistErrorState(errorName: error.errorName));
+      },
+      (response) {
+        return emit(AddToWishlistSuccessState());
       },
     );
   }

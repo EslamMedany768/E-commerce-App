@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(SharedPreferenceUtils.getData(key: "token"));
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: index == 0 || index == 1

@@ -1,12 +1,14 @@
 import 'package:e_commerce_app/domain/entities/GetWishListProduct.dart';
+import 'package:e_commerce_app/feature/ui/pages/home_screen/tabs/products_tab/cubit/product_tab_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoriteCardWidget extends StatelessWidget {
   FavProductsEntity product;
   final Color primaryBlue;
 
-   FavoriteCardWidget({
+  FavoriteCardWidget({
     super.key,
     required this.product,
     required this.primaryBlue,
@@ -14,27 +16,25 @@ class FavoriteCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProductTabViewModel viewModel = BlocProvider.of<ProductTabViewModel>(
+      context,
+    );
     return Container(
       height: 300,
       width: 200,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: const Color(0xFFF1F1F1),
-        ),
+        border: Border.all(color: const Color(0xFFF1F1F1)),
       ),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           // Image
           Expanded(
-            flex: 5,
             child: Stack(
               children: [
-
                 Container(
                   width: double.infinity,
                   margin: const EdgeInsets.all(4),
@@ -53,10 +53,11 @@ class FavoriteCardWidget extends StatelessWidget {
                 Positioned(
                   right: 7,
                   top: 7,
-                  child: Icon(
-                    Icons.favorite,
-                    color: primaryBlue,
-                    size: 18,
+                  child: InkWell(
+                    onTap: () {
+                      viewModel.deleteFromWishlist(product.id!);
+                    },
+                    child: Icon(Icons.favorite, color: primaryBlue, size: 18),
                   ),
                 ),
               ],
@@ -65,9 +66,7 @@ class FavoriteCardWidget extends StatelessWidget {
 
           // Product name
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 7,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 7),
             child: Text(
               product.title!,
               maxLines: 2,
@@ -82,17 +81,13 @@ class FavoriteCardWidget extends StatelessWidget {
 
           const SizedBox(height: 4),
 
-
           const SizedBox(height: 3),
 
           // Price
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 7,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 7),
             child: Row(
               children: [
-
                 Text(
                   '\$${product.price!.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -102,10 +97,7 @@ class FavoriteCardWidget extends StatelessWidget {
                   ),
                 ),
 
-
-
                 // const Spacer(),
-
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 4,
@@ -115,7 +107,6 @@ class FavoriteCardWidget extends StatelessWidget {
                     color: primaryBlue,
                     borderRadius: BorderRadius.circular(3),
                   ),
-
                 ),
               ],
             ),
@@ -125,15 +116,15 @@ class FavoriteCardWidget extends StatelessWidget {
 
           // Add to cart
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 6,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 6),
             child: SizedBox(
               width: double.infinity,
               height: 25,
 
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  viewModel.addToCart(product.id!);
+                },
 
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryBlue,
@@ -149,10 +140,7 @@ class FavoriteCardWidget extends StatelessWidget {
 
                 child: const Text(
                   'Add to Cart',
-                  style: TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600),
                 ),
               ),
             ),

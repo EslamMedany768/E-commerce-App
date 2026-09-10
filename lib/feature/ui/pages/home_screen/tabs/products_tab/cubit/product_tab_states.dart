@@ -56,4 +56,16 @@ class GetWishlistItemsErrorState extends ProductTabStates {
 class GetWishlistItemsLoadingState extends ProductTabStates {
 
 }
+class DeleteFromWishlistSuccessState extends ProductTabStates {
+
+}
+
+class DeleteFromWishlistErrorState extends ProductTabStates {
+  String errorName;
+
+  DeleteFromWishlistErrorState({required this.errorName});
+}
+class DeleteFromWishlistLoadingState extends ProductTabStates {
+
+}
 

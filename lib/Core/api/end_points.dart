@@ -7,4 +7,6 @@ class EndPoints {
   static const addToCart = "/api/v1/cart";
   static const addToWishlist = "/api/v1/wishlist";
   static const getWishlistItems = "/api/v1/wishlist";
+  static const deleteWishlistItems = "/api/v1/wishlist/";
+  static const deleteCartItem = "/api/v1/cart/";
 }

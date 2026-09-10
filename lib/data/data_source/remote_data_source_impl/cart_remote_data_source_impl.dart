@@ -51,6 +51,7 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
         var pref = await SharedPreferences.getInstance();
         var token = pref.getString("token");
         var response = await apiManager.deleteData(
+          EndPoint: EndPoints.deleteCartItem,
           productId: productId,
           headers: {"token": token},
         );

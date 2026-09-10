@@ -41,6 +41,7 @@ import '../domain/repository/repositories/wishlist_repository.dart' as _i732;
 import '../domain/use_cases/add_to_cart.dart' as _i950;
 import '../domain/use_cases/add_to_wishlist.dart' as _i802;
 import '../domain/use_cases/delete_cart_item.dart' as _i183;
+import '../domain/use_cases/delete_from_wishlist_use_case.dart' as _i923;
 import '../domain/use_cases/get_all_brands.dart' as _i253;
 import '../domain/use_cases/get_all_categories.dart' as _i421;
 import '../domain/use_cases/get_all_products.dart' as _i419;
@@ -115,6 +116,11 @@ extension GetItInjectableX on _i174.GetIt {
         wishlistRepository: gh<_i732.WishlistRepository>(),
       ),
     );
+    gh.factory<_i923.DeleteFromWishlistUseCase>(
+      () => _i923.DeleteFromWishlistUseCase(
+        wishlistRepository: gh<_i732.WishlistRepository>(),
+      ),
+    );
     gh.factory<_i29.GetWishlistItemsUseCase>(
       () => _i29.GetWishlistItemsUseCase(
         wishlistRepository: gh<_i732.WishlistRepository>(),
@@ -161,19 +167,20 @@ extension GetItInjectableX on _i174.GetIt {
         getAllBrandsUseCase: gh<_i253.GetAllBrandsUseCase>(),
       ),
     );
+    gh.factory<_i284.CartViewModel>(
+      () => _i284.CartViewModel(
+        getCartItemsUseCase: gh<_i400.GetCartItemsUseCase>(),
+        deleteCartItemUseCase: gh<_i183.DeleteCartItemUseCase>(),
+        updateCartItemUseCase: gh<_i866.UpdateCartItemUseCase>(),
+      ),
+    );
     gh.factory<_i198.ProductTabViewModel>(
       () => _i198.ProductTabViewModel(
         addToWishlistUseCase: gh<_i802.AddToWishlistUseCase>(),
         getAllProductsUseCase: gh<_i419.GetAllProductsUseCase>(),
         addToCartUseCase: gh<_i950.AddToCartUseCase>(),
         getWishlistItemsUseCase: gh<_i29.GetWishlistItemsUseCase>(),
-      ),
-    );
-    gh.factory<_i284.CartViewModel>(
-      () => _i284.CartViewModel(
-        getCartItemsUseCase: gh<_i400.GetCartItemsUseCase>(),
-        deleteCartItemUseCase: gh<_i183.DeleteCartItemUseCase>(),
-        updateCartItemUseCase: gh<_i866.UpdateCartItemUseCase>(),
+        deleteFromWishlistUseCase: gh<_i923.DeleteFromWishlistUseCase>(),
       ),
     );
     return this;

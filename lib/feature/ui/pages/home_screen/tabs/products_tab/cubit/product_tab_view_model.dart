@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/domain/use_cases/add_to_cart.dart';
 import 'package:e_commerce_app/domain/use_cases/add_to_wishlist.dart';
+import 'package:e_commerce_app/domain/use_cases/delete_from_wishlist_use_case.dart';
 import 'package:e_commerce_app/domain/use_cases/get_all_products.dart';
 import 'package:e_commerce_app/domain/use_cases/get_wishlist_items_use_case.dart';
 import 'package:e_commerce_app/feature/ui/pages/home_screen/tabs/products_tab/cubit/product_tab_states.dart';
@@ -13,6 +14,7 @@ class ProductTabViewModel extends Cubit<ProductTabStates> {
   AddToCartUseCase addToCartUseCase;
   AddToWishlistUseCase addToWishlistUseCase;
   GetWishlistItemsUseCase getWishlistItemsUseCase;
+  DeleteFromWishlistUseCase deleteFromWishlistUseCase;
   int numOfItemsInCart = 0;
 
   ProductTabViewModel({
@@ -20,6 +22,7 @@ class ProductTabViewModel extends Cubit<ProductTabStates> {
     required this.getAllProductsUseCase,
     required this.addToCartUseCase,
     required this.getWishlistItemsUseCase,
+    required this.deleteFromWishlistUseCase,
   }) : super(ProductTabInitialStates());
 
   /// hold data & handle logic
@@ -52,7 +55,7 @@ class ProductTabViewModel extends Cubit<ProductTabStates> {
   }
 
   getWishListItems() async {
-    emit(GetWishlistItemsLoadingState());
+
     var either = await getWishlistItemsUseCase.invoke();
     either.fold(
       (l) {
@@ -72,6 +75,18 @@ class ProductTabViewModel extends Cubit<ProductTabStates> {
       },
       (response) {
         return emit(AddToWishlistSuccessState());
+      },
+    );
+  }
+
+  deleteFromWishlist(String productId) async {
+    var either = await deleteFromWishlistUseCase.invoke(productId);
+    either.fold(
+      (error) {
+        emit(DeleteFromWishlistErrorState(errorName: error.errorName));
+      },
+      (response) {
+        emit(DeleteFromWishlistSuccessState());
       },
     );
   }

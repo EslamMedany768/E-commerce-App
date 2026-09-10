@@ -34,12 +34,13 @@ class ApiManager {
   }
 
   Future<Response> deleteData({
+    required String EndPoint,
     required String productId,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
   }) {
     return dio.delete(
-      "${ApiConstants.baseUrl + EndPoints.addToCart}/$productId",
+      "${ApiConstants.baseUrl + EndPoint}/$productId",
       queryParameters: queryParameters,
       options: Options(headers: headers, validateStatus: (status) => true),
     );

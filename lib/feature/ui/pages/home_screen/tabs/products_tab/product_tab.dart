@@ -28,7 +28,7 @@ class ProductTab extends StatelessWidget {
               print("succ");
               FlutterToast.showToast(
                 text:
-                    "numOfCartItems : ${state.productResponse.numOfCartItems}",
+                    "Added Successfully",
               );
             } else if (state is AddToCartErrorStates) {
               print("error");

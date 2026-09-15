@@ -6,7 +6,6 @@ import '../../entities/GetCartResponseEntity.dart';
 
 abstract class CartRepository {
   Future<Either<Failures, GetCartResponseEntity>> getCartItems();
-
   Future<Either<Failures, GetCartResponseEntity>> deleteCartItem(String productId);
   Future<Either<Failures, GetCartResponseEntity>> updateCartItem(String productId,int count);
 }

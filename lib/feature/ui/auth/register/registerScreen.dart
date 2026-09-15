@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/Core/cache/shared_preference_utils.dart';
 import 'package:e_commerce_app/Core/utils/app_assets.dart';
 import 'package:e_commerce_app/Core/utils/app_colors.dart';
 import 'package:e_commerce_app/Core/utils/app_validation.dart';
@@ -27,10 +28,45 @@ class RegisterScreen extends StatelessWidget {
           DialogUtils.showLoading(context: context);
         } else if (state is RegisterErrorState) {
           Navigator.pop(context);
-          DialogUtils.showMessage(context: context, title: "Error", posAction: "ok", content: state.error);
+          DialogUtils.showMessage(
+            context: context,
+            title: "Error",
+            posAction: "ok",
+            content: state.error,
+          );
         } else if (state is RegisterSuccessState) {
+          try {
+            SharedPreferenceUtils.saveData(
+              key: "name",
+              value: viewModel.nameController.text,
+            );
+            SharedPreferenceUtils.saveData(
+              key: "phone",
+              value: viewModel.phoneController.text,
+            );
+            SharedPreferenceUtils.saveData(
+              key: "email",
+              value: viewModel.emailController.text,
+            );
+            SharedPreferenceUtils.saveData(
+              key: "password",
+              value: viewModel.passwordController.text,
+            );
+          } catch (e) {
+            DialogUtils.showMessage(
+              context: context,
+              title: "error",
+              posAction: "ok",
+              content: e.toString(),
+            );
+          }
           DialogUtils.hideLoading(context: context);
-          DialogUtils.showMessage(context: context, title: "Success", posAction: "ok", content: "Register Successfuly");
+          DialogUtils.showMessage(
+            context: context,
+            title: "Success",
+            posAction: "ok",
+            content: "Register Successfuly",
+          );
         }
       },
       child: Scaffold(

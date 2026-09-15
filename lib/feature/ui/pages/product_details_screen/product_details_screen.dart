@@ -157,6 +157,15 @@ class ProductDetailsScreen extends StatelessWidget {
               Spacer(),
               Row(
                 children: [
+
+                  Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Total Price",style: AppStyle.light14grey.copyWith(fontWeight: FontWeight.bold),),
+                      Text("EGP ${(args.price)}",style: AppStyle.medium18darkBlue,),
+                    ],
+                  ),
+                  SizedBox(width: 16.w),
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(

@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: index == 0 || index == 1
           ? AppBar(
+        scrolledUnderElevation: 0,
               title: CustomAppbar(),
               toolbarHeight: size.height * 0.14,
               backgroundColor: AppColor.white,

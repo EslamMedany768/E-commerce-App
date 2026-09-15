@@ -89,7 +89,7 @@ class FavoriteCardWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  '\$${product.price!.toStringAsFixed(2)}',
+                  'EGP ${product.price!.toString()}',
                   style: TextStyle(
                     color: primaryBlue,
                     fontSize: 12,
